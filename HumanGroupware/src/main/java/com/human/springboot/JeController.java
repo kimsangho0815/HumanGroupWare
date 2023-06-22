@@ -41,16 +41,6 @@ public class JeController {
 	public String employeeOrganization() {
 		return "employee/employee_organization";
 	}
-	// 근태 현황 ( 페이지 접속 )
-	@GetMapping("/attendance/current")
-	public String attendanceCurrent() {
-		return "attendance/attendance_current";
-	}
-	// 근태 관리 ( 페이지 접속 )
-	@GetMapping("/attendance/management")
-	public String attendanceManagement() { 
-		return "attendance/attendance_management";
-	}
 	// 사원별 근태 현황
 	@GetMapping("/attendance/byEmployee")
 	public String attendanceByEmployee() {

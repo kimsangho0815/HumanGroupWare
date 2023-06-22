@@ -97,10 +97,20 @@ $('#end_id').on('click', function(){
          loadEnd_time();
      }else if( time > 182000){
          // 야근
-         param = 3;
-         timeEnd = time-110000;
-         timeEnd = '0'+timeEnd;
-         loadEnd_time();
+         if( time > 190000){
+        	 param = 3;
+             timeEnd = time-180000;
+        	 timeEnd = '0'+timeEnd;
+        	 loadEnd_time();
+        	 return false;
+         }else{
+        	 param = 3;
+             timeEnd = time-180000;
+        	 timeEnd = '00'+timeEnd;
+        	 loadEnd_time();
+        	 return false;
+         }
+         
      }else {
          // 정상 퇴근
          param = 1;
