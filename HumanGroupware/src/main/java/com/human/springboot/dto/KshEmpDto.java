@@ -15,6 +15,48 @@ public class KshEmpDto {
 	private int emp_birth;
 	private int emp_position;
 	private int emp_depart;
+	public int getPosition_id() {
+		return position_id;
+	}
+	public void setPosition_id(int position_id) {
+		this.position_id = position_id;
+	}
+	public String getPosition_name() {
+		return position_name;
+	}
+	public void setPosition_name(String position_name) {
+		this.position_name = position_name;
+	}
+	public String getJob_type() {
+		return job_type;
+	}
+	public void setJob_type(String job_type) {
+		this.job_type = job_type;
+	}
+	public int getDep_id() {
+		return dep_id;
+	}
+	public void setDep_id(int dep_id) {
+		this.dep_id = dep_id;
+	}
+	public String getDep_name() {
+		return dep_name;
+	}
+	public void setDep_name(String dep_name) {
+		this.dep_name = dep_name;
+	}
+	public int getDep_manager() {
+		return dep_manager;
+	}
+	public void setDep_manager(int dep_manager) {
+		this.dep_manager = dep_manager;
+	}
+	public int getDep_parent() {
+		return dep_parent;
+	}
+	public void setDep_parent(int dep_parent) {
+		this.dep_parent = dep_parent;
+	}
 	private String emp_img;
 	//position
 	private int position_id;

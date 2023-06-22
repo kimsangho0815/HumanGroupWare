@@ -10,6 +10,36 @@ public class getSedelDTO {
 	String receiver;
 	String note_content;
 	String note_senddate;
+	public int getNote_id() {
+		return note_id;
+	}
+	public void setNote_id(int note_id) {
+		this.note_id = note_id;
+	}
+	public int getNote_recipient() {
+		return note_recipient;
+	}
+	public void setNote_recipient(int note_recipient) {
+		this.note_recipient = note_recipient;
+	}
+	public String getReceiver() {
+		return receiver;
+	}
+	public void setReceiver(String receiver) {
+		this.receiver = receiver;
+	}
+	public String getNote_content() {
+		return note_content;
+	}
+	public void setNote_content(String note_content) {
+		this.note_content = note_content;
+	}
+	public String getNote_senddate() {
+		return note_senddate;
+	}
+	public void setNote_senddate(String note_senddate) {
+		this.note_senddate = note_senddate;
+	}
 	
 	
 }
