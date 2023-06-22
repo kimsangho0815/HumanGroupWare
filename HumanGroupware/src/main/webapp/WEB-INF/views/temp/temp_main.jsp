@@ -165,6 +165,7 @@
 $(document)
 .ready(function(){
 	MainList();
+	getUserInfo();
 })
 //해당 url 숨기기
 .ready(function() {
@@ -295,9 +296,6 @@ $(document)
       }
     })
   })
-.on("click","#Category_box4",function(){
-	getUserInfo()
-})
   function MainList() {
 	  $.ajax({
 	    url: '/Mypage_list',
