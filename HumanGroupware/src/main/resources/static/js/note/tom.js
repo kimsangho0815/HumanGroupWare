@@ -150,11 +150,11 @@ function getReDel(pageNum, amount) {
 	});
 }
 function ReceiveDivset(pageNum, amount, totalPage) {
-	let acc = pageNum % amount;
-	let firstPage = Math.max(pageNum - acc + 1, 1);
-	let lastPage = Math.min(firstPage - acc + amount, totalPage);
+	
+	let firstPage = Math.max(pageNum - 1 + 1, 1);
+	let lastPage = Math.min(firstPage  +3 -1, totalPage);
 	let pagediv ="";
-	if(pagediv!=0){
+	if(totalPage!=0){
 		pagediv+="<li id='RePrivButton' class='page-item disabled' onclick='ReceiveFirstPage(" + firstPage + "," + amount + ")'><a class='page-link' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>";
 	for (let i = firstPage; i <= lastPage; i++) {
 		if (pageNum == i) {
