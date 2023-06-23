@@ -74,12 +74,20 @@ $(document)
 })
 /* 출근 */
 $('#start_id').on('click',function(){
+	if ( '${emp_id}' ==''){
+		alert('로그인 후 이용 가능합니다.');
+		return false;
+	}
 	loadattdance_chack();
 })
    
 /* 퇴근 */
 $('#end_id').on('click', function(){
      // 현재 시간 ( 퇴근 )
+     if ( '${emp_id}' == ''){
+    	 alert('로그인 후 이용 가능합니다.');
+    	 return false;
+     }
      let now = new Date();
      let year = now.getFullYear();
      let month = ('0'+(now.getMonth()+1)).slice(-2);
