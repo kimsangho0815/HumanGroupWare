@@ -317,16 +317,14 @@ $(document)
 	    	} else {
 	    	  $('#emp_img').attr('src', '/img/' + imgName);
 	    	}
-	    },
-	    error: function(jqXHR, textStatus, errorThrown) {
-	      console.log('Error: ' + textStatus);
-	      console.log('Error Detail:', errorThrown);
 	    }
 	  });
 	}
-	function getUserInfo(){
-		$.ajax({url:"/getUserInfo",
-				type:"get"})
-	}
+function getUserInfo(){
+	$.ajax({
+        url: "/getUserInfo",
+        type: "post",
+    })
+}
 </script>
 </html>

@@ -293,7 +293,6 @@ $('#img').change(function() {
                 processData: false,
                 data: formData,
                 success: function(data) {
-                    console.log(data);
                     // 현재 넣은 이미지 표시
                     $('#showImg').attr('src', imgSrc);
                     $('#getImg img').not('#showImg').remove(); // 기존 이미지 삭제
@@ -351,7 +350,6 @@ function Mypage_List() {
     dataType: 'json',
     data: { emp_id: $('#emp_id').val() },
     success: function(data) {
-    	console.log(data);
       if (data && data.length > 0) {
         let empData = data[0];
 

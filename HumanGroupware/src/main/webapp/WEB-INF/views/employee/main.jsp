@@ -137,7 +137,6 @@ function loadatt_id(){
                 	id = data[i];
                 	let emp_no = id['emp_no'];
                 	$('#id_value').val(emp_no);
-                	console.log(emp_no);
                 }
 	}}
 	)

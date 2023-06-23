@@ -51,38 +51,39 @@ public class TaskController {
 	public String MyWorkLog() {
 		return "task/task_my_worklog";
 	}
-	@GetMapping("/getUserInfo")
-	public void getUserInfo(HttpServletRequest req,HttpSession session) {
-		HttpSession login = req.getSession();
-	  	
-		String empId = (String) login.getAttribute("emp_id");
-		
-		
-		int checkUser = tdao.checkUser(empId);
-		
-		userinfoDTO dto = null;
-		
-		if(checkUser==1) {
-			dto	= tdao.userinfo(empId);
-		}
-		 Map<String, Object> userInfoMap = new HashMap<>();
-		    
-		 	userInfoMap.put("emp_no", dto.getEmp_no());
-		    
-		    userInfoMap.put("emp_name", dto.getEmp_name());
-		    
-		    userInfoMap.put("emp_position", dto.getEmp_position());
-		    
-		    userInfoMap.put("emp_depart", dto.getEmp_depart());
-		    
-		    userInfoMap.put("dep_name", dto.getDep_name());
-		    
-		    userInfoMap.put("managerName", dto.getManagerName());
-		    
-		    userInfoMap.put("managerNum", dto.getManagerNum());
-		 
-			session.setAttribute("userInfoMap", userInfoMap);
-	}
+	
+	@PostMapping("/getUserInfo")
+	@ResponseBody
+	public String doGetUserInfo(HttpServletRequest req, HttpSession session) {
+	    String empId = (String) session.getAttribute("emp_id");
+	    
+	    if (empId == null) {
+	        return "empID";
+	    }
+	    
+	    int checkUser = tdao.checkUser(empId);
+	    userinfoDTO dto = null;
+	    
+	    if (checkUser == 1) {
+	        dto = tdao.userinfo(empId);
+	    }
+	    
+	    Map<String, Object> userInfoMap = new HashMap<>();
+	    
+	    if (dto != null) {
+	        userInfoMap.put("emp_no", dto.getEmp_no());
+	        userInfoMap.put("emp_name", dto.getEmp_name());
+	        userInfoMap.put("emp_position", dto.getEmp_position());
+	        userInfoMap.put("emp_depart", dto.getEmp_depart());
+	        userInfoMap.put("dep_name", dto.getDep_name());
+	        userInfoMap.put("managerName", dto.getManagerName());
+	        userInfoMap.put("managerNum", dto.getManagerNum());
+	    }
+	    
+	    session.setAttribute("userInfoMap", userInfoMap);
+	    return "/getUserInfo";
+	}		
+	
 	@PostMapping("/getReport")
 	@ResponseBody
 	public Map<String,Object> getReport(HttpServletRequest req) {
