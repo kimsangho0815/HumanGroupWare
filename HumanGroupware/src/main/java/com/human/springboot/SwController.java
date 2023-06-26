@@ -39,12 +39,6 @@ public class SwController {
 
     @Autowired
     private SwDAO sdao;
-    
-    // 테스트용
-    @GetMapping("/temp/main")
-    public String tempMainPage(){
-        return "temp/temp_layout";
-    }
 
     // 공지사항
     @GetMapping("/board/notice")
@@ -519,21 +513,18 @@ public class SwController {
                 receive = "완료";
                 sdao.edmsApprovalConfirm(edmsId, approver, receive);
             }
-
         }catch(Exception e){
             e.printStackTrace();
             return "fail";
         }
-        
         return "complete";
     }
-
-    // 임시 로그인 화면
+    // 로그인 화면
     @GetMapping("/edms/login")
     public String edmsLoginPage(){
         return "temp/edms_login";
     } 
-    // 임시 로그인
+    // 로그인
     @PostMapping("/edmslogin")
     public String edmsLogin(HttpServletRequest req){
         
@@ -555,70 +546,16 @@ public class SwController {
         }
         return "redirect:/edms/home";
     }
-    // 임시 로그아웃
+    // 로그아웃
     @PostMapping("/edmslogout")
     public String testLogout(HttpServletRequest req){
         HttpSession userSession = req.getSession();
         userSession.invalidate();
         return "redirect:/edms/home";
     }
-    // 임시 메인
+    // 메인
     @GetMapping("/edms/home")
     public String tempHome(){
         return "temp/edms_layout";
     }
-    // 파일 테스트 페이지
-    @GetMapping("/test/download")
-    public String testDownload(){
-        return "temp/test_download";
-    }
-    // 테스트 업로드
-    @PostMapping("/testupload")
-    public String testUpload(@RequestParam(value="fileUpload")MultipartFile multi,
-                            Model model){
-        try {
-            String fileName = multi.getOriginalFilename();
-            String filePath = "D:/testimg/" + fileName;
-            System.out.println(fileName);
-            File file = new File(filePath);
-            multi.transferTo(file);
-
-            model.addAttribute("fileName", fileName);
-            model.addAttribute("filePath", filePath);
-        } catch (Exception e) {
-           e.printStackTrace();
-        }
-        return "redirect:/test/download";
-    }
-    // 테스트 다운로드
-    @GetMapping("/test/filedownload")
-    public void testDownload(HttpServletResponse res,
-                            HttpServletRequest req){
-        try{
-            String filePath = req.getParameter("filePath");
-            String fileName = req.getParameter("fileName");
-            byte[] fileByte = 
-            FileUtils.readFileToByteArray(new File(filePath));
-
-            res.setContentType("application/octet-stream");
-            res.setHeader("Content-Disposition", "attachment; fileName=\""+
-                            URLEncoder.encode(fileName, "UTF-8")+"\";");
-            res.setHeader("Content-Transfer-Encoding", "Binary");
-
-            res.getOutputStream().write(fileByte);
-            res.getOutputStream().flush();
-            res.getOutputStream().close();
-            
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
-    }
-    
-    
-
-
-    
-    
-
 }
