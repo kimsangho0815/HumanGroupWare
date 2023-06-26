@@ -89,6 +89,13 @@
         position: relative;
         bottom: 15px;
     }
+    #refList{
+        width: 460px;
+        border-radius: 3px;
+        border-color: #ced4da;
+        outline: none;
+        resize: none;
+    }
 </style>
 <body>
 <input type="hidden" id="loginUser" value="${loginUser.emp_no}">
@@ -131,8 +138,11 @@
                     <%=request.getAttribute("edmsReason")%>
                 </td>
             </tr>
-
             <%  } %>
+            <tr>
+                <td scope="row">참조</td>
+                <td><textarea id="refList" rows="2" readonly></textarea></td>
+            </tr>
         </tbody>
     </table>
 </div>
@@ -382,17 +392,31 @@ $(document)
         $("#templateLeaveBody > tbody > tr:nth-child(7) > td")
         .css("height", "55px");
     }
+
     let loginUser = '<%=(int)session.getAttribute("emp_no")%>';
     console.log(loginUser);
+    let approvalOrder = $("#edmsStep").val();
+    console.log(approvalOrder);
+    let flag = false;
+
     if($("#edmsStatus").val() == "결재대기"){
-        if(loginUser == $("#midId").val() || loginUser == $("#finalId").val()){
-        $("#btnOpenModal").attr("disabled", false);
+        if(loginUser == $("#midId").val() && approvalOrder == "mid"){
+            flag = true;
+        }else if(loginUser == $("#finalId").val() && approvalOrder == "final"){
+            flag = true;
         }
     }
+    if(flag) $("#btnOpenModal").attr("disabled", false);
+
     approverSign($("#midCheck"));
     approverSign($("#finalCheck"));
     
     $("#modalBody table tr:nth-child(3)").addClass("displayNone");
+
+    <c:forEach items="${refList}" var="ref">
+        $("#refList").text($("#refList").text()+"${ref}");
+    </c:forEach>
+
 })
 .on("change", "input[name=approvalCheck]", function(){
     if($(this).is(":checked") && $(this).attr("id") == "checkReject"){

@@ -31,30 +31,47 @@
 <script>
 $(document)
 .ready(()=>{
-    getEdmsList();
+    let loginUser = '<%=(int)session.getAttribute("emp_no")%>';
+    getEdmsList(loginUser);
 })
-function getEdmsList(){
+function getEdmsList(loginUser){
     $.ajax({
         url: "/getEdmsList/all",
         type: "post",
         dataType: "json",
         success: (data)=>{
             $("#edmsListTable tbody").empty();
-            console.table(data);
-            data.forEach(edms => {
-                let str = "<tr><td>"+edms["edmsId"]+"</td>";
-                str += "<td>"+edms["edmsCategory"]+"</td>"
-                str += "<td>"+"<a href='/edms/view/"+edms["edmsId"]+"'>"+edms["edmsTitle"]+"</a></td>";
-                str += "<td>"+edms["empName"]+"</td>";
-                str += "<td>"+edms["depName"]+"</td>";
-                str += "<td>"+edms["edmsDate"]+"</td>";
-                let status = edms["edmsStatus"];
-                str += "<td><span>"+edms["edmsStatus"]+"</span></td>";    
-                
-                $("#edmsListTable tbody").append(str);
 
-                setStatusColor();
+            data.forEach(edms => {
+                let refList = edms["edmsRef"];
+                let flag = false;
+                if(refList != undefined){
+                    refList = refList.split(",");
+                    console.log(refList);
+                    refList.forEach(ref => {
+                        if(loginUser == ref){
+                            flag = true;
+                        }
+                        console.log(flag);
+                    })
+                }
+                if(loginUser == edms["drafter"] || loginUser == edms["midApprover"] || loginUser == edms["fnlApprover"]){
+                    flag = true;
+                }
+                if(flag){
+                    let str = "<tr><td>"+edms["edmsId"]+"</td>";
+                    str += "<td>"+edms["edmsCategory"]+"</td>"
+                    str += "<td>"+"<a href='/edms/view/"+edms["edmsId"]+"'>"+edms["edmsTitle"]+"</a></td>";
+                    str += "<td>"+edms["empName"]+"</td>";
+                    str += "<td>"+edms["depName"]+"</td>";
+                    str += "<td>"+edms["edmsDate"]+"</td>";
+                    let status = edms["edmsStatus"];
+                    str += "<td><span>"+edms["edmsStatus"]+"</span></td>";    
+                    
+                    $("#edmsListTable tbody").append(str);
+                }
             });
+            setStatusColor();
         }
     })
 }

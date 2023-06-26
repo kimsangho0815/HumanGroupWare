@@ -17,6 +17,7 @@ public class SwEdmsDTO extends SwEmpDTO{
     private String edms_mid_chk;
     private String edms_fnl_chk;
     private String edms_reason;
+	private String edms_ref;
 
     private String mid_name;
     private String final_name;
@@ -27,7 +28,14 @@ public class SwEdmsDTO extends SwEmpDTO{
     private String leave_start;
     private String leave_end;
     private String leave_detail;
-    public int getEdms_id() {
+	private int leave_period;
+
+    // edms_loa
+    private int loa_id;
+    private String loa_detail;
+    private int loa_expense;
+
+	public int getEdms_id() {
 		return edms_id;
 	}
 	public void setEdms_id(int edms_id) {
@@ -159,12 +167,6 @@ public class SwEdmsDTO extends SwEmpDTO{
 	public void setLoa_expense(int loa_expense) {
 		this.loa_expense = loa_expense;
 	}
-	private int leave_period;
-
-    // edms_loa
-    private int loa_id;
-    private String loa_detail;
-    private int loa_expense;
 
 
 }

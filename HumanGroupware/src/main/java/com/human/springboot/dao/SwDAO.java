@@ -49,4 +49,6 @@ public interface SwDAO {
     void edmsLoa(String edmsDetail, int expense);
     SwEdmsDTO edmsLoaView(int edmsId);
 
+    SwEmpDTO getRefInfo(int empNo);
+
 }

@@ -315,6 +315,10 @@ public class SwController {
             jObject.put("depName", edms.getDep_name());
             jObject.put("edmsDate", edms.getEdms_date());
             jObject.put("edmsStatus", edms.getEdms_status());
+            jObject.put("edmsRef", edms.getEdms_ref());
+            jObject.put("drafter", edms.getEdms_drafter());
+            jObject.put("midApprover", edms.getEdms_mid_approver());
+            jObject.put("fnlApprover", edms.getEdms_fnl_approver());
             jArray.put(jObject);
         }
         return jArray.toString();
@@ -353,6 +357,16 @@ public class SwController {
         System.out.println("불러올 문서날짜: "+edms.getEdms_date());
         model.addAttribute("edmsCategory", edmsCategory);
         model.addAttribute("edmsStatus", edms.getEdms_status());
+
+        if(edms.getEdms_ref() != null){
+            String[] list = edms.getEdms_ref().split(",");
+            ArrayList<String> refList = new ArrayList<>();
+            for(String ref : list){
+                SwEmpDTO info = sdao.getRefInfo(Integer.parseInt(ref));
+                refList.add("["+info.getDep_name()+"]"+info.getEmp_name()+" "+info.getPosition_name());
+            }
+            model.addAttribute("refList", refList);
+        }
         
         String midCheck = edms.getEdms_mid_chk();
         String finalCheck = edms.getEdms_fnl_chk();
@@ -499,7 +513,6 @@ public class SwController {
     @ResponseBody
     public String edmsApproval(@PathVariable("edmsId")int edmsId,
                                 HttpServletRequest req){
-        // String approveLine = req.getParameter("edmsStep");
         try{
             int approver = Integer.parseInt(req.getParameter("approver"));
             String receive = req.getParameter("receive");
