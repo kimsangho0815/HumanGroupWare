@@ -25,7 +25,7 @@
 					<div class="input_box_name">
 						<a class="a_box_name">사 원 명</a>
 						<select id = a_box_name name = a_box_name class = box_name_select>
-							<option value = "선택">선택</option>
+							<option value = "선택"  hidden selected>선택</option>
 						</select>
 					</div>
 					<div class="input_box_name">
