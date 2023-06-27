@@ -297,16 +297,13 @@ $(document).ready(function(){
 						 if( img05 == null){
 							 let impo = '<img src="/resources/img/people.png">';
 							 $('#image').append(impo);
-						 }else if(val == '선택'){
-							 let impo = '<img src="/resources/img/people.png">"';
-							 $('#image').append(impo);
-						 
 						 }else{
 							 $('#emp_imgimg').val(img05);
 							 path = $('#emp_imgimg').val();
 							 new_path = path.split("static")[1]
-							 let img = '<img src="/resources'+new_path+'>';
+							 let img = '<img src="/resources'+new_path+'">';
 							 $('#image').append(img);
+							 console.log(img);
 						 }
 					 }
 				 }})
