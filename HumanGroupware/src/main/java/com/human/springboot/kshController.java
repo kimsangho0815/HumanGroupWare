@@ -149,6 +149,7 @@ public class kshController {
 					login.setAttribute("emp_name", login_session.get(i).getEmp_name());
 					login.setAttribute("emp_position", login_session.get(i).getEmp_position());
 					login.setAttribute("emp_depart", login_session.get(i).getEmp_depart());
+					login.setAttribute("authority", login_session.get(i).getBoard_authority());
 					}
 			}else {
 				loginVal = "fail";

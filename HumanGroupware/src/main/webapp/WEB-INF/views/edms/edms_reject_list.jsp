@@ -14,6 +14,13 @@
 </style>
 <body>
 <h3 style="text-align: center;">반려문서 목록</h3>
+<div class="mb-3 justify-content-start">
+    <select class="form-select form-select-sm ms-1" id="selectCategory" style="width: 100px;">
+        <option value="all" selected>전체</option>
+        <option value="leave">휴가</option>
+        <option value="loa">품의</option>
+    </select>
+</div>
 <table id="edmsListTable" class="table table-sm table-hover text-center">
     <thead>
         <tr>
@@ -32,14 +39,18 @@ $(document)
 .ready(()=>{
     getEdmsList();
 })
+.on("change", "#selectCategory", function(){
+    getEdmsList();
+})
 function getEdmsList(){
+    let selected = $("#selectCategory option:selected").val();
     $.ajax({
         url: "/getEdmsList/reject",
         type: "post",
+        data: {category: selected},
         dataType: "json",
         success: (data)=>{
             $("#edmsListTable tbody").empty();
-            console.table(data);
             data.forEach(edms => {
                 let str = "<tr><td>"+edms["edmsId"]+"</td>";
                 str += "<td>"+edms["edmsCategory"]+"</td>"
@@ -48,7 +59,7 @@ function getEdmsList(){
                 str += "<td>"+edms["depName"]+"</td>";
                 str += "<td>"+edms["edmsDate"]+"</td>";
                 let status = edms["edmsStatus"];
-                str += "<td><span>"+edms["edmsStatus"]+"</span></td>";    
+                str += "<td><span>"+edms["edmsStatus"]+"</span></td>";
                 
                 $("#edmsListTable tbody").append(str);
             });

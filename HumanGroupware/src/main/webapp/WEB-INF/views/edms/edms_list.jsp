@@ -14,8 +14,14 @@
 </style>
 <body>
 <h3 style="text-align: center;">결재목록</h3>
+<div class="mb-3 justify-content-start">
+    <select class="form-select form-select-sm ms-1" id="selectCategory" style="width: 100px;">
+        <option value="all" selected>전체</option>
+        <option value="leave">휴가</option>
+        <option value="loa">품의</option>
+    </select>
+</div>
 <table id="edmsListTable" class="table table-sm table-hover text-center">
-    
     <thead>
         <tr>
             <th>번호</th><th>분류</th><th>제목</th>
@@ -29,15 +35,20 @@
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="/js/bootstrap-js/bootstrap.bundle.min.js"></script>
 <script>
+var loginUser = '<%=(int)session.getAttribute("emp_no")%>';
 $(document)
 .ready(()=>{
-    let loginUser = '<%=(int)session.getAttribute("emp_no")%>';
+    getEdmsList(loginUser);
+})
+.on("change", "#selectCategory", function(){
     getEdmsList(loginUser);
 })
 function getEdmsList(loginUser){
+    let selected = $("#selectCategory option:selected").val();
     $.ajax({
         url: "/getEdmsList/all",
         type: "post",
+        data: {category: selected},
         dataType: "json",
         success: (data)=>{
             $("#edmsListTable tbody").empty();
@@ -47,12 +58,8 @@ function getEdmsList(loginUser){
                 let flag = false;
                 if(refList != undefined){
                     refList = refList.split(",");
-                    console.log(refList);
                     refList.forEach(ref => {
-                        if(loginUser == ref){
-                            flag = true;
-                        }
-                        console.log(flag);
+                        if(loginUser == ref) flag = true;
                     })
                 }
                 if(loginUser == edms["drafter"] || loginUser == edms["midApprover"] || loginUser == edms["fnlApprover"]){

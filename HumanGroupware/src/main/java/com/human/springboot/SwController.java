@@ -16,6 +16,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -297,12 +299,16 @@ public class SwController {
                                 HttpServletRequest req){
         System.out.println("불러올 전자결재 목록: "+category);
 
+        String selected = req.getParameter("category");
+        System.out.println("selected: "+selected);
+
         HttpSession session = req.getSession();
         ArrayList<SwEdmsDTO> edmsList = null;
+
         if(category.equals("all")){
-            edmsList = sdao.edmsList();
+            edmsList = sdao.edmsList(selected);
         }else if(category.equals("reject")){
-            edmsList = sdao.edmsRejectList((int)session.getAttribute("emp_no"));
+            edmsList = sdao.edmsRejectList((int)session.getAttribute("emp_no"), selected);
         }
 
         JSONArray jArray = new JSONArray();
@@ -464,6 +470,7 @@ public class SwController {
     }
     // 전자결재 상신
     @PostMapping("/edmsSend/{edmsCategory}")
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public String edmsSend(@PathVariable("edmsCategory")String edmsCategory,
                              HttpServletRequest req){
         int writerId = Integer.parseInt(req.getParameter("writerId"));

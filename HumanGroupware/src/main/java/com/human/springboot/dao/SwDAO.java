@@ -31,13 +31,13 @@ public interface SwDAO {
     ArrayList<SwCommentDTO> commentList(int board_id);
 
     boolean userCheck(String id, String pw);
-    SwEmpDTO getUserInfo(String userId);
+    SwEmpDTO getUserInfo(String empId);
 
     ArrayList<SwEmpDTO> empList();
     void edmsSend(int drater, int appMid, int appFinal, String title, String category, String refList);
     void edmsLeave(String category, String startDate, String endDate, String detail, int period);
-    ArrayList<SwEdmsDTO> edmsList();
-    ArrayList<SwEdmsDTO> edmsRejectList(int drafter);
+    ArrayList<SwEdmsDTO> edmsList(String category);
+    ArrayList<SwEdmsDTO> edmsRejectList(int drafter, String category);
 
     SwEdmsDTO findEdms(int edmsId);
     String getEmpName(int empNo);

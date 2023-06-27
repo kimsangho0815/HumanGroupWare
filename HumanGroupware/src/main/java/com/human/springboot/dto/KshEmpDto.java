@@ -15,6 +15,8 @@ public class KshEmpDto {
 	private int emp_birth;
 	private int emp_position;
 	private int emp_depart;
+	private String board_authority;
+
 	public int getPosition_id() {
 		return position_id;
 	}

@@ -173,6 +173,14 @@
             a.edms_mid_approver, a.edms_fnl_approver
       from edms a, employee b, department c
       where a.edms_drafter = b.emp_no and b.emp_depart = c.dep_id and not a.edms_status = '반려'
+      <choose>
+        <when test='param1.equals("leave")'>
+          and a.edms_category = '휴가'
+        </when>
+        <when test='param1.equals("loa")'>
+          and a.edms_category = '품의'
+        </when>
+      </choose>
       order by a.edms_id desc
     </select>
     <select id="edmsRejectList" resultType="com.human.springboot.dto.SwEdmsDTO">
@@ -180,6 +188,14 @@
       from edms a, employee b, department c
       where a.edms_drafter = b.emp_no and b.emp_depart = c.dep_id 
             and a.edms_status = '반려' and a.edms_drafter = #{param1}
+      <choose>
+        <when test='param2.equals("leave")'>
+          and a.edms_category = '휴가'
+        </when>
+        <when test='param2.equals("loa")'>
+          and a.edms_category = '품의'
+        </when>
+      </choose>
       order by a.edms_id desc
     </select>
     <select id="getEmpName" resultType="String">
