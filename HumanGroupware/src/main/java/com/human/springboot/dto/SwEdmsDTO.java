@@ -1,5 +1,7 @@
 package com.human.springboot.dto;
 
+import java.util.Collection;
+
 import lombok.Data;
 
 @Data
@@ -7,7 +9,10 @@ public class SwEdmsDTO extends SwEmpDTO{
     
     // edms
     private int edms_id;
-    private String edms_category;
+    public void setEdms_ref(String edms_ref) {
+		this.edms_ref = edms_ref;
+	}
+	private String edms_category;
     private int edms_drafter;
     private int edms_mid_approver;
     private int edms_fnl_approver;
@@ -19,7 +24,10 @@ public class SwEdmsDTO extends SwEmpDTO{
     private String edms_reason;
 	private String edms_ref;
 
-    private String mid_name;
+    public String getEdms_ref() {
+		return edms_ref;
+	}
+	private String mid_name;
     private String final_name;
 
     // edms_leave

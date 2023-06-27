@@ -21,13 +21,14 @@ public interface JieunDAO {
 	ArrayList<EmpDepartPositionDTO> employee_search(String s, String b, String c, String i, String o);		// 사원 조회
 	ArrayList<EmpDepartPositionDTO> all_organization();						// 조직도 불러오기
 	ArrayList<EmpDepartPositionDTO> attendance_list(String a, String b);	// 직원별 근태조회 ( 부서, 날짜 )
-	ArrayList<EmployeeDTO> employeeData_select(String a);					// 직원 정보 불러오기
+	ArrayList<EmpDepartPositionDTO> employeeData_select(int a);			// 정보 불러오기
 	ArrayList<EmployeeDTO> id_load_select(String a);							// 직원 번호 불러오기
 	ArrayList<EmpDepartPositionDTO>leave_select_list(String a, String b);	// 휴가 직원 불러오기
 	ArrayList<PositionDTO> exemploye_select1(String a, String b);			// 부서, 직급, 고용형태 id 노출
 	ArrayList<DepartmentDTO> exemployee_select2(String a);					// 부서, 직급, 고용형태 id 노출
 	ArrayList<EmpDepartPositionDTO>dep_boss_name_select();				// 부서장명 불러오기
 	ArrayList<PositionDTO> position_name_select();								// 직급명 불러오기
+	ArrayList<EmpDepartPositionDTO>name_select27();							// 직원 이름 불러오기
 	
 	// 입사일자, position(부서, 직급), 고용형태, 핸드폰, 이메일, 주소
 	void employee_update0(String emp_join, int emp_position, int emp_depart, String emp_id);	

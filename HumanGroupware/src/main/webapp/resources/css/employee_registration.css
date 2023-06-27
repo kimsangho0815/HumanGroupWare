@@ -77,8 +77,8 @@ main{
 	margin-left:3rem;
 }
 .employee_people{
-	margin-top:2rem;;
 	margin-left:5rem;
+	margin-bottom : 5rem;
 	border:0.1px solid white;
 	align-items : center;
 	height:200px;
@@ -110,6 +110,15 @@ main{
 	text-align:center;
 	border-radius: 0.5rem;
 }
+.box_name_select{
+	border-radius: 0.5rem;
+	text-align:center;
+	width:200px;
+}
+.box_name_select:focus{
+	outline:none;
+	border-radius: 0.5rem;
+}
 .input_box_select:focus{
 	outline:none;
 	border-radius: 0.5rem;
@@ -133,7 +142,7 @@ main{
 }
 .input_type{
 	border:0 solid black;
-	width:200px;
+	width:300px;
 	font-size: 1rem;
 }
 .input_type:focus{

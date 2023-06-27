@@ -235,19 +235,39 @@ public class JeController {
 
 	// 직원 정보 불러오기
 	@PostMapping("/employeeData_select")
-	@ResponseBody
+	@ResponseBody 
 	public String doEmployeeData_select(HttpServletRequest req) {
-		String emp_id = req.getParameter("emp_id");
-		System.out.println(emp_id);
-		ArrayList<EmployeeDTO> employeeData_select = JiDao.employeeData_select(emp_id);
+		int emp_id = Integer.parseInt(req.getParameter("emp_id"));
+		ArrayList<EmpDepartPositionDTO> employeeData_select = JiDao.employeeData_select(emp_id);
 		JSONArray ja = new JSONArray();
-		for(int i=0; i<employeeData_select.size(); i++) {
+		for(int i = 0; i<employeeData_select.size(); i++) {
 			JSONObject jo = new JSONObject();
-			jo.put("emp_name", employeeData_select.get(i).getEmp_name());
-			jo.put("emp_mobile", employeeData_select.get(i).getEmp_mobile());
-			jo.put("emp_email", employeeData_select.get(i).getEmp_email());
-			jo.put("emp_id", employeeData_select.get(i).getEmp_id());
+			jo.put("emp_mobile",employeeData_select.get(i).getEmp_mobile());
+			jo.put("emp_email",employeeData_select.get(i).getEmp_email());
+			jo.put("emp_id",employeeData_select.get(i).getEmp_id());
 			jo.put("emp_img", employeeData_select.get(i).getEmp_img());
+			jo.put("emp_join", employeeData_select.get(i).getEmp_join());
+			jo.put("position_name",employeeData_select.get(i).getPosition_name());
+			jo.put("job_type",employeeData_select.get(i).getJob_type());
+			jo.put("dep_name",employeeData_select.get(i).getDep_name());
+			jo.put("position_id",employeeData_select.get(i).getPosition_id());
+			jo.put("dep_id", employeeData_select.get(i).getDep_id());
+			ja.put(jo);
+		}
+		return ja.toString();
+	}
+	
+	// 직원이름 불러오기 
+	@PostMapping("/name_select27")
+	@ResponseBody
+	public String doName_select27(HttpServletRequest req) {
+		ArrayList<EmpDepartPositionDTO> name_select27 = JiDao.name_select27();
+		JSONArray ja = new JSONArray();
+		for(int i = 0; i<name_select27.size(); i++) {
+			JSONObject jo = new JSONObject();
+			jo.put("position_name", name_select27.get(i).getPosition_name());
+			jo.put("emp_no", name_select27.get(i).getEmp_no());
+			jo.put("emp_name", name_select27.get(i).getEmp_name());
 			ja.put(jo);
 		}
 		return ja.toString();

@@ -23,7 +23,14 @@ public class EmpDepartPositionDTO {
 	String leave_category;
 	String leave_start;
 	String leave_end;
+	String emp_join;
 	
+	public String getEmp_join() {
+		return emp_join;
+	}
+	public void setEmp_join(String emp_join) {
+		this.emp_join = emp_join;
+	}
 	public int getEdms_id() {
 		return edms_id;
 	}

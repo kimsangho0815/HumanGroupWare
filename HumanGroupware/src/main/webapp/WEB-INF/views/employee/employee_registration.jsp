@@ -19,12 +19,14 @@
 		<div>
 			<div class="employee_people">
 				<div class="image" id="image">
-				
+					<img src="/resources/img/people.png">
 				</div>				
 				<div class="test">
 					<div class="input_box_name">
 						<a class="a_box_name">사 원 명</a>
-						<input type=text id="employee_kname" class="input_type" disabled>
+						<select id = a_box_name name = a_box_name class = box_name_select>
+							<option value = "선택">선택</option>
+						</select>
 					</div>
 					<div class="input_box_name">
 						<a class="a_box_name">연 락 처</a>
@@ -92,7 +94,7 @@ $(document).ready(function(){
 	loadDep_name();
 	loadPos_name();
 	loadJob_type();
-	loadEmployeeData();
+	loadNameChoose();
 })
 // select 직접입력 
 	// 직급
@@ -131,6 +133,10 @@ $(document).ready(function(){
 					 loadExemployeeDep();					 
 				}});
 	});
+	// 이름
+	$('#a_box_name').change(function(){
+		loadEmployeeData();
+	})
 	
 	// 사원 정보 업데이트 ( update ) department_insert0  employee_insert
 	$('#employee_insert3').on("click",function(){
@@ -214,6 +220,22 @@ $(document).ready(function(){
 					 }},
 	})}
 	
+	// 직원 이름 불러오기 ( select )
+	function loadNameChoose(){
+		$.ajax({url:'/name_select27',
+			type:'post',
+			 dataType:'json',
+				success:function(data){
+					for(let i=0; i<data.length; i++){
+						name23 = data[i];
+						let option='<option value = '+name23['emp_no']+'>'+name23['emp_name']+' '+name23['position_name']+'</option>';
+						$('#a_box_name').append(option);
+						let name_no = name['emp_no'];
+						console.log(name_no);
+					}
+				}})
+	}
+	
 	// 직급, 고용형태 position_id 확인 ( hidden ) emp_depart1
 	function loadExemployee(){
 		$.ajax({url:'/exemploye_select1',
@@ -241,29 +263,51 @@ $(document).ready(function(){
 })}
 	
 	function loadEmployeeData(){
+		 $('#image').empty();
 		$.ajax({url:'/employeeData_select',
 				 type:'post',
-				 data:{emp_id:'${emp_id}'},
+				 data:{emp_id:$('#a_box_name').val()},
 				 dataType:'json',
 				 success:function(data){
 					 for(let i=0; i<data.length; i++){
-						 data = data[i];
-						 let name = data['emp_name'];
-						 let mobile = data['emp_mobile'];
-						 let email = data['emp_email'];
-						 let id = data['emp_id'];
-						 let test = data['emp_img'];
-						 $('#employee_kname').val(name);
-						 $('#employee_phone').val('0'+mobile);
+						 name_select = data[i];
+						 let mobile = name_select['emp_mobile'];
+						 let email = name_select['emp_email'];
+						 let id = name_select['emp_id'];
+						 let startDate = name_select['emp_join'];
+						 let img05 = name_select['emp_img'];
+						 let depart = name_select['dep_name'];
+						 let pos_name = name_select['position_name'];
+						 let jobType = name_select['job_type'];
+						 let positionId = name_select['position_id'];
+						 let dep_id = name_select['dep_id'];
+						 $('#entering_date').val(startDate);
+						 $('#employee_phone').val(mobile);
 						 $('#employee_email').val(email);
 						 $('#employee_id').val(id);
-						 $('#emp_imgimg').val(test);
-						 path = $('#emp_imgimg').val();
-						 new_path = path.split("static")[1]
-						 console.log(new_path);
-						 let img = '<img src="/resources'+new_path+'">';
-						 $('#image').append(img);
+						 $('#employee_team2').val(depart);
+						 $('#employee_position2').val(pos_name);
+						 $('#employee_form2').val(jobType);
+						 $('#emp_position1').val(positionId);
+						 $('#emp_depart1').val(dep_id);
+						 $('#select_form').val(jobType);
+						 $('#select_position').val(pos_name);
+						 $('#select_team').val(depart);
+						 let val = $('#a_box_name').val();
+						 if( img05 == null){
+							 let impo = '<img src="/resources/img/people.png">';
+							 $('#image').append(impo);
+						 }else if(val == '선택'){
+							 let impo = '<img src="/resources/img/people.png">"';
+							 $('#image').append(impo);
 						 
+						 }else{
+							 $('#emp_imgimg').val(img05);
+							 path = $('#emp_imgimg').val();
+							 new_path = path.split("static")[1]
+							 let img = '<img src="/resources'+new_path+'>';
+							 $('#image').append(img);
+						 }
 					 }
 				 }})
 	}

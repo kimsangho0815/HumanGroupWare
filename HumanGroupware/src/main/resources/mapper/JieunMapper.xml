@@ -116,10 +116,17 @@
 	</delete>
 	
 	<!-- 로그인된 직원 정보 ( select ) -->
-	<select id="employeeData_select" resultType="com.human.springboot.dto.EmployeeDTO">
-		select emp_name, emp_mobile, emp_email, emp_id, emp_img
-			from employee
-		where emp_id = #{param1}
+	<select id="employeeData_select" resultType="com.human.springboot.dto.EmpDepartPositionDTO">
+		select a.emp_no, a.emp_name, a.emp_join, a.emp_img, a.emp_mobile, a.emp_email, a.emp_id, b.position_name, b.job_type, b.position_id, c.dep_id, c.dep_name
+			from employee a, position b, department c
+		where emp_depart = dep_id and emp_position = position_id
+			and emp_no = #{param1}
+		
+	</select>
+	<select id= "name_select27" resultType="com.human.springboot.dto.EmpDepartPositionDTO">
+		select a.emp_no, a.emp_name, b.position_name
+			from employee a, position b
+		where position_id = emp_position
 	</select>
 	
 	<!-- 로그인 된 아이디의 고유번호 ( select ) -->
