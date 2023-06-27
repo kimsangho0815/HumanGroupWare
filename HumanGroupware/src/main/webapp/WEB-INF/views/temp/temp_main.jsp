@@ -11,8 +11,7 @@
 <body>
 	<div class="title_container">
 		<div class=title_box1><a href="/temp/temp_main">Human<br>GroupWare</a></div>
-		<div class=title_box2></div>
-		<div class=title_box3>
+		<div class=title_box2>
 		<div class="gap"></div>
 			사원 찾기<br><input type=text id=Search_Emp placeholder="Search.." size=8>
 			<button id=Search_EmpBtn>
@@ -238,7 +237,6 @@ $(document)
     }
 
     $('#emp_dialog').dialog({
-      title: '사원 찾기',
       modal: true,
       width: 500
     });
