@@ -5,6 +5,7 @@ import com.human.springboot.dto.SwBoardDTO;
 import com.human.springboot.dto.SwCommentDTO;
 import com.human.springboot.dto.SwEdmsDTO;
 import com.human.springboot.dto.SwEmpDTO;
+import com.human.springboot.dto.task.selectTaskDTO;
 
 import java.util.ArrayList;
 import org.apache.ibatis.annotations.Mapper;
@@ -50,5 +51,7 @@ public interface SwDAO {
     SwEdmsDTO edmsLoaView(int edmsId);
 
     SwEmpDTO getRefInfo(int empNo);
+
+    ArrayList<selectTaskDTO> getTaskPeriod(int empNo);
 
 }

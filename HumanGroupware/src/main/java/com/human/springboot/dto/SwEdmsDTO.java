@@ -9,9 +9,7 @@ public class SwEdmsDTO extends SwEmpDTO{
     
     // edms
     private int edms_id;
-    public void setEdms_ref(String edms_ref) {
-		this.edms_ref = edms_ref;
-	}
+    
 	private String edms_category;
     private int edms_drafter;
     private int edms_mid_approver;
@@ -24,9 +22,6 @@ public class SwEdmsDTO extends SwEmpDTO{
     private String edms_reason;
 	private String edms_ref;
 
-    public String getEdms_ref() {
-		return edms_ref;
-	}
 	private String mid_name;
     private String final_name;
 
@@ -42,6 +37,7 @@ public class SwEdmsDTO extends SwEmpDTO{
     private int loa_id;
     private String loa_detail;
     private int loa_expense;
+
 
 	public int getEdms_id() {
 		return edms_id;
@@ -175,6 +171,11 @@ public class SwEdmsDTO extends SwEmpDTO{
 	public void setLoa_expense(int loa_expense) {
 		this.loa_expense = loa_expense;
 	}
-
+	public String getEdms_ref() {
+		return edms_ref;
+	}
+	public void setEdms_ref(String edms_ref) {
+		this.edms_ref = edms_ref;
+	}
 
 }

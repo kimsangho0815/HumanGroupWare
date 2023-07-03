@@ -280,8 +280,14 @@
 </body>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="/js/bootstrap-js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.4.0/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis"></script>
 <script>
+const myTask = '<%=request.getAttribute("myTask")%>';
 $(document)
+.ready(()=>{
+    console.log(myTask);
+})
 .on("click", "#btnApprovalLine", function(){
     let approvalLine = $("#selectApprover option:selected").val();
     let lineStep = $("#selectApprover option:selected").text();
@@ -350,7 +356,7 @@ $(document)
         $("#leavePeriod").val(leavePeriod);
     }
 })
-.on("blur", "#leavePeriodDiv input[type=text]", function(){
+.on("change", "#leavePeriodDiv input[type=text]", function(){
     let id = $(this).attr("id");
     let value = $(this).val();
     if(id.includes("Year")) return;
@@ -376,7 +382,21 @@ $(document)
         alert("제목을 작성해야 합니다.");
         return false;
     }
-    if(!confirm("상신 합니까?")) return false;
+    if($("#approverMidName").val()=="" || $("#approverFinalName").val()==""){
+        alert("결재선을 지정해주세요");
+        return false;
+    }
+
+    if(confirm("AI확률 예측을 이용 하시겠습니까?")){
+        let period = $("#leavePeriod").val();
+
+        getData(parseInt(period), 2, 1);
+        alert("확률 예측중입니다. 잠시 기다려주세요");
+
+        return false;
+
+    }else if(!confirm("상신 하시겠습니까?")) return false;
+
     let refList = [];
     $("#edmsRef a").each(function(i, el){
         refList.push($(el).data("value"));
@@ -454,6 +474,269 @@ function getStartDate(y, m ,d){
 }
 function getEndDate(y, m, d){
     return new Date(y+"-"+m+"-"+d);
+}
+function getData(leavePeriod, i, x){
+
+//사원이 요청하면 상급자가 결정
+//  업무기간, 요청자의 직급, 평가자직급
+// 중요도 판단.
+//0 사원 1차장 2과장
+const 보스톤_원인 = [
+[10,2,1],
+	[10,2,1],
+	[10,2,1],
+	[10,2,1],
+	[10,2,1],
+	[10,2,1],
+	[10,2,1],
+	[10,2,1],
+	[10,2,1],
+	[10,2,1],
+	[10,2,1],
+	[10,2,1],
+	[10,2,1],
+	[10,2,1],
+	[10,2,1],
+
+
+	[7,2,1],
+	[7,2,1],
+	[7,2,1],
+	[7,2,1],
+	[7,2,1],
+	[7,2,1],
+	[7,2,1],
+	[7,2,1],
+	[7,2,1],
+	[7,2,1],
+	[7,2,1],
+	[7,2,1],
+	[7,2,1],
+	[7,2,1],
+	[7,2,1],
+
+
+	[5,2,1],
+	[5,2,1],
+	[5,2,1],
+	[5,2,1],
+	[5,2,1],
+	[5,2,1],
+	[5,2,1],
+	[5,2,1],
+	[5,2,1],
+	[5,2,1],
+	[5,2,1],
+	[5,2,1],
+	[5,2,1],
+	[5,2,1],
+	[5,2,1],
+
+  
+    [3,2,1],
+	[3,2,1],
+	[3,2,1],
+	[3,2,1],
+	[3,2,1],
+	[3,2,1],
+	[3,2,1],
+	[3,2,1],
+	[3,2,1],
+	[3,2,1],
+	[3,2,1],
+	[3,2,1],
+	[3,2,1],
+	[3,2,1],
+	[3,2,1],
+
+    [2,2,1],
+	[2,2,1],
+	[2,2,1],
+	[2,2,1],
+	[2,2,1],
+	[2,2,1],
+	[2,2,1],
+	[2,2,1],
+	[2,2,1],
+	[2,2,1],
+	[2,2,1],
+	[2,2,1],
+	[2,2,1],
+	[2,2,1],
+	[2,2,1],    
+
+	[1,2,1],
+	[1,2,1],
+	[1,2,1],
+	[1,2,1],
+	[1,2,1],
+	[1,2,1],
+	[1,2,1],
+	[1,2,1],
+	[1,2,1],
+	[1,2,1],
+	[1,2,1],
+	[1,2,1],
+	[1,2,1],
+	[1,2,1],
+	[1,2,1],
+
+];
+
+//유저가 방문방의 별점
+
+    const 보스톤_결과 = [
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+  [ 1],
+
+  [ 3],
+  [ 3],
+  [ 3],
+  [ 3],
+  [ 3],
+  [ 3],
+  [ 3],
+  [ 3],
+  [ 3],
+  [ 3],
+  [ 3],
+  [ 3],
+  [ 3],
+  [ 3],
+  [ 3],
+
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+  [ 5],
+
+]
+//1월에 남성이 A호텔의 특정룸의 평점을 구해주세요.
+const 질의데이터=[[leavePeriod,2,1]];
+
+//제시한 지역중에 높은순으로 추천순위가 된다.     
+        
+   
+        // 1. 과거의 데이터를 준비합니다. 
+        var 원인 = tf.tensor(보스톤_원인);
+        var 결과 = tf.tensor(보스톤_결과);
+        var 질의 =tf.tensor(질의데이터);
+ 
+        // 2. 모델의 모양을 만듭니다. 
+        var X = tf.input({ shape: 3 });
+        var H1 = tf.layers.dense({ units: 3, activation:'relu' }).apply(X);
+        var H2 = tf.layers.dense({ units:3, activation:'relu' }).apply(H1);
+        var Y = tf.layers.dense({ units: 1 }).apply(H2);
+        var model = tf.model({ inputs: X, outputs: Y });
+        var compileParam = { optimizer: tf.train.adam(), loss: tf.losses.meanSquaredError }
+        model.compile(compileParam);
+        tfvis.show.modelSummary({name:'요약', tab:'모델'}, model);
+ 
+        // 3. 데이터로 모델을 학습시킵니다. 
+        var _history = [];
+        var fitParam = { 
+          epochs: 300,
+          callbacks:{
+            onEpochEnd:
+              function(epoch, logs){
+                console.log('epoch', epoch, logs, 'RMSE=>', Math.sqrt(logs.loss));
+                _history.push(logs);
+                tfvis.show.history({name:'loss', tab:'역사'}, _history, ['loss']);
+              }
+          }
+        } // loss 추가 예제
+        model.fit(원인, 결과, fitParam).then(function (result) {
+             
+            // 4. 모델을 이용합니다. 
+            // 4.1 기존의 데이터를 이용
+            var 예측한결과 = model.predict(질의);
+            예측한결과.print();
+            var myArray = 예측한결과.dataSync();
+         // view 업무보고를 할 때 하급사원이 보고를 할 때 
+         let data = Math.floor(myArray);
+
+              if (data > 5) {
+                // 반려확률 : 높음
+                alert("반려 확률이 높습니다.");
+              } else {
+                // 반려확률 : 낮음
+                alert("반려 확률이 낮습니다.");
+              }
+         console.log(myArray);
+         console.log(myArray[0]);
+        });  
 }
 </script>
 </html>

@@ -32,6 +32,7 @@ import com.human.springboot.dto.SwBoardDTO;
 import com.human.springboot.dto.SwCommentDTO;
 import com.human.springboot.dto.SwEdmsDTO;
 import com.human.springboot.dto.SwEmpDTO;
+import com.human.springboot.dto.task.selectTaskDTO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -466,6 +467,26 @@ public class SwController {
         String goTo = "edms/edms_template_";
         goTo += category.equals("leave") ? "leave" : "loa";
         System.out.println("리턴: "+goTo);
+        
+        if(category.equals("leave")){
+            ArrayList<selectTaskDTO> taskPeriods = sdao.getTaskPeriod(empNo);
+            if(taskPeriods.size() > 0){
+                ArrayList<String> myTask = new ArrayList<>();
+                System.out.println("진행중인 업무:");
+                for (selectTaskDTO periods : taskPeriods) {
+                    String startStr = periods.getTask_started().replaceAll("-", "");
+                    String limitStr = periods.getTask_limit().replaceAll("-", "");
+                    int start = Integer.parseInt(startStr);
+                    int limit = Integer.parseInt(limitStr);
+
+                    if(limit > Integer.parseInt(now.toString().replace("-", ""))){
+                        System.out.println(start+" ~ "+limit);
+                        myTask.add(start+"~"+limit);
+                    }
+                }
+                model.addAttribute("myTask", myTask);
+            }
+        }
 
         return goTo;
     }

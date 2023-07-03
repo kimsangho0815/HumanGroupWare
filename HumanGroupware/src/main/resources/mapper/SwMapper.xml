@@ -154,6 +154,7 @@
       select a.emp_no, a.emp_name, c.position_name, b.dep_name
       from employee a, department b, position c 
       where a.emp_depart = b.dep_id and a.emp_position = c.position_id
+      order by a.emp_position desc
     </select>
     <insert id="edmsSend">
       insert into edms(edms_id, edms_drafter, edms_mid_approver, 
@@ -266,5 +267,10 @@
       from employee a, department b, position c
       where a.emp_depart = b.dep_id and a.emp_position = c.position_id 
             and a.emp_no = #{param1}
+    </select>
+    <select id="getTaskPeriod" resultType="com.human.springboot.dto.task.selectTaskDTO">
+      select task_started, task_limit
+      from task
+      where task_performer = #{param1}
     </select>
 </mapper>
