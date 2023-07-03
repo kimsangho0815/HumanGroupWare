@@ -31,6 +31,7 @@
     </thead>
     <tbody></tbody>
 </table>
+<div class="d-flex justify-content-center" id="infoDiv"></div>
 </body>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="/js/bootstrap-js/bootstrap.bundle.min.js"></script>
@@ -64,6 +65,12 @@ function getEdmsList(){
                 $("#edmsListTable tbody").append(str);
             });
             $("#edmsListTable span").css("color", "red");
+
+            $("#infoDiv").empty();
+            if(!$("#edmsListTable tbody tr").length){
+                let p = $("<p>",{style: "font-size: 18px"}).text("해당하는 문서가 없습니다.");
+                    $("#infoDiv").append(p);
+            }
         }
     })
 }
