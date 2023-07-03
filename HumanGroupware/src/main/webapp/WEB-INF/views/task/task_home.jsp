@@ -63,6 +63,8 @@
 <script src="/js/bootstrap-js/bootstrap.bundle.min.js"></script>
 <script src="/js/summernote/summernote-lite.js"></script>
 <script src="/js/summernote/lang/summernote-ko-KR.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.4.0/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis"></script>
 <script>
 $(document)
 .ready(()=>{
@@ -136,5 +138,4 @@ function selectReport(){
 }
 
 </script>
-
 </html>

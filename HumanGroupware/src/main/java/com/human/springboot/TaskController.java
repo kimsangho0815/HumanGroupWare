@@ -304,12 +304,19 @@ public class TaskController {
 	@ResponseBody
 	public void insertTask(HttpServletRequest req) {
 		String title=req.getParameter("title");
+		System.out.println(title);
 		int depart = Integer.parseInt(req.getParameter("depart"));
+		System.out.println(depart);
 		int drafter = Integer.parseInt(req.getParameter("drafter"));
+		System.out.println(drafter);
 		int performer = Integer.parseInt(req.getParameter("performer"));
+		System.out.println(performer);
 		String start =req.getParameter("start");
+		System.out.println(start);
 		String limit =req.getParameter("limit");
+		System.out.println(limit);
 		String content = req.getParameter("content");
+		System.out.println(content);
 		
 		tdao.insertTask(title,depart,drafter,performer,start,limit,content);
 		
